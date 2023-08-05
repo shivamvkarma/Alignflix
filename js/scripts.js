@@ -96,3 +96,39 @@ document.querySelector('.close1').addEventListener('click', closeModal1);
 document.querySelector('.close2').addEventListener('click', closeModal2);
 document.querySelector('.close3').addEventListener('click', closeModal3);
 document.querySelector('.close4').addEventListener('click', closeModal4);
+
+
+
+function submitForm(event) {
+    event.preventDefault();
+    const formData = new FormData(document.getElementById("myForm"));
+    const apiKey = "toch8nu0mavke";
+    const apiUrl = "https://sheetdb.io/api/v1/toch8nu0mavke";
+
+    const headers = {
+        "Authorization": `Bearer ${apiKey}`
+    };
+
+    fetch(apiUrl, {
+        method: "POST",
+        headers: headers,
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok.");
+            }
+            return response.json();
+        })
+        .then(data => {
+
+            document.getElementById("submitButton").style.display = 'none';
+            document.getElementById("submitSuccessMessage").classList.remove('d-none');
+            document.getElementById("myForm").reset();
+        })
+        .catch(error => {
+            document.getElementById("submitButton").style.display = 'none';
+            document.getElementById("submitSuccessMessage").classList.remove('d-none');
+            console.error("Error submitting the form:", error);
+        });
+}
